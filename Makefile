@@ -1,5 +1,5 @@
 PROJECT=router
-SOURCES=router.c lib/queue.c lib/list.c lib/lib.c
+SOURCES=router.c lib/queue.c lib/list.c lib/lib.c lib/binary_trie.c lib/utils.c lib/vector.c
 LIBRARY=nope
 INCPATHS=include
 LIBPATHS=.
@@ -24,7 +24,7 @@ $(BINARY): $(OBJECTS)
 	$(CC) $(INCFLAGS) $(CFLAGS) -fPIC $< -o $@
 
 clean:
-	rm -rf $(OBJECTS) router hosts_output router_*
+	sudo rm -rf $(OBJECTS) router hosts_output router_*
 
 run_router0: all
 	./router rtable0.txt rr-0-1 r-0 r-1

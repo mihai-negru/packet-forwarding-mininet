@@ -2,6 +2,7 @@
 
 #include <sys/ioctl.h>
 #include <net/if.h>
+// #include <linux/if.h> // ?
 #include <netinet/in.h>
 #include <sys/socket.h>
 #include <linux/if_packet.h>
@@ -110,6 +111,20 @@ char *get_interface_ip(int interface)
 	ret = ioctl(interfaces[interface], SIOCGIFADDR, &ifr);
 	DIE(ret == -1, "ioctl SIOCGIFADDR");
 	return inet_ntoa(((struct sockaddr_in *)&ifr.ifr_addr)->sin_addr);
+}
+
+uint32_t get_interface_ipv4(int interface)
+{
+	struct ifreq ifr;
+	int ret;
+	if (interface == 0)
+		sprintf(ifr.ifr_name, "rr-0-1");
+	else {
+		sprintf(ifr.ifr_name, "r-%u", interface - 1);
+	}
+	ret = ioctl(interfaces[interface], SIOCGIFADDR, &ifr);
+	DIE(ret == -1, "ioctl SIOCGIFADDR");
+	return ((struct sockaddr_in *)&ifr.ifr_addr)->sin_addr.s_addr;
 }
 
 void get_interface_mac(int interface, uint8_t *mac)

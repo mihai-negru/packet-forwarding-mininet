@@ -40,3 +40,11 @@ void *queue_deq(queue q)
 		return temp;
 	}
 }
+
+void queue_free(queue q) {
+	while (!queue_empty(q)) {
+		(void)queue_deq(q);
+	}
+
+	free(q);
+}

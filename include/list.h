@@ -3,10 +3,9 @@
 
 typedef struct cell *list;
 
-struct cell
-{
-  void *element;
-  list next;
+struct cell {
+    void *element;
+    list next;
 };
 
 extern list cons(void *element, list l);
